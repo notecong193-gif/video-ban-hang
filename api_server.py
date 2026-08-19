@@ -21,6 +21,13 @@ class RenderRequest(BaseModel):
 def health():
     return {'ok': True}
 
+@app.get('/video/latest.mp4')
+def latest_video():
+    video = OUT/'video.mp4'
+    if not video.exists() or video.stat().st_size == 0:
+        raise HTTPException(status_code=404, detail='No rendered video yet')
+    return FileResponse(video, media_type='video/mp4', filename='video-ve-tay.mp4')
+
 @app.post('/render')
 async def render_video(req: RenderRequest):
     async with LOCK:
