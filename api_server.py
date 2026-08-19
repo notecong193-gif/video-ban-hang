@@ -1,6 +1,6 @@
-import asyncio, json, os, shutil, subprocess, tempfile
+import asyncio, json, os, subprocess
 from pathlib import Path
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parent
 PUBLIC = ROOT / 'public'
 OUT = ROOT / 'out'
 LOCK = asyncio.Lock()
+API_KEY = os.environ.get('VIDEO_RENDER_API_KEY', '')
 
 app = FastAPI(title='Skill Video Ve Tay Render API', version='1.0.0')
 
@@ -21,8 +22,13 @@ class RenderRequest(BaseModel):
 def health():
     return {'ok': True}
 
+def require_key(x_api_key: str | None):
+    if not API_KEY or x_api_key != API_KEY:
+        raise HTTPException(status_code=401, detail='Unauthorized')
+
 @app.post('/render')
-async def render_video(req: RenderRequest):
+async def render_video(req: RenderRequest, x_api_key: str | None = Header(default=None)):
+    require_key(x_api_key)
     async with LOCK:
         try:
             PUBLIC.mkdir(exist_ok=True)
