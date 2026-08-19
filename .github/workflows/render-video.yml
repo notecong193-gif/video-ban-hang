@@ -17,6 +17,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Mark render started
+        run: |
+          mkdir -p output
+          echo "started $(date -u +%Y-%m-%dT%H:%M:%SZ)" > output/render-status.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add output/render-status.txt
+          git commit -m "Render started" || true
+          git push || true
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -62,8 +72,9 @@ jobs:
         run: |
           mkdir -p output
           cp out/video.mp4 output/latest.mp4
+          echo "done $(date -u +%Y-%m-%dT%H:%M:%SZ)" > output/render-status.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/latest.mp4
+          git add output/latest.mp4 output/render-status.txt
           git commit -m "Publish latest rendered video" || exit 0
           git push
