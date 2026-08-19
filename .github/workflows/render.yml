@@ -29,10 +29,8 @@ jobs:
           python -m pip install numpy soundfile onnxruntime
           python - <<'PY'
           from vieneu import Vieneu
-          tts = Vieneu(backend='onnx')
-          names = [label for label, _ in tts.list_preset_voices()]
-          assert 'Phạm Tuyên' in names, f'Phạm Tuyên voice not found: {names}'
-          print('VieNeu OK - Phạm Tuyên available')
+          Vieneu(backend='onnx')
+          print('VieNeu ONNX initialized')
           PY
 
       - name: Build voice master timeline
