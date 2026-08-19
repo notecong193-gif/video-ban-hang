@@ -1,9 +1,27 @@
 {
   "title": "VIDEO VẼ TAY",
-  "subtitle": "Nội dung do ChatGPT điều khiển",
+  "subtitle": "VieNeu • nam miền Bắc • voice-driven",
   "scenes": [
-    {"text": "Hook: giữ người xem trong 3 giây đầu", "start": 0, "duration": 150},
-    {"text": "Hình minh họa được vẽ dần theo lời đọc", "start": 150, "duration": 180},
-    {"text": "Remotion tự dựng và xuất video hoàn chỉnh", "start": 330, "duration": 180}
+    {
+      "narration": "Bạn có từng thấy những video vẽ tay như thế này?",
+      "keyword": "VIDEO VẼ TAY",
+      "start": 0,
+      "duration": 150,
+      "visual": "idea"
+    },
+    {
+      "narration": "Hình ảnh không đứng yên. Nét vẽ xuất hiện theo đúng nhịp lời đọc.",
+      "keyword": "NÉT → HÌNH → CHI TIẾT",
+      "start": 150,
+      "duration": 210,
+      "visual": "person"
+    },
+    {
+      "narration": "Mỗi cảnh kể một ý bằng hình ảnh, thay vì biến video thành slideshow.",
+      "keyword": "SHOW THE IDEA",
+      "start": 360,
+      "duration": 210,
+      "visual": "chart"
+    }
   ]
 }
