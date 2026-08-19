@@ -1,0 +1,9 @@
+{
+  "title": "VIDEO VẼ TAY",
+  "subtitle": "Nội dung do ChatGPT điều khiển",
+  "scenes": [
+    {"text": "Hook: giữ người xem trong 3 giây đầu", "start": 0, "duration": 150},
+    {"text": "Hình minh họa được vẽ dần theo lời đọc", "start": 150, "duration": 180},
+    {"text": "Remotion tự dựng và xuất video hoàn chỉnh", "start": 330, "duration": 180}
+  ]
+}
