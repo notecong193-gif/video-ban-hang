@@ -7,30 +7,61 @@ on:
       - 'public/video.json'
       - 'src/**'
       - 'scripts/**'
+      - '.github/workflows/render.yml'
 
 jobs:
   render:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - name: Install VieNeu
+        shell: bash
         run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
           git clone --depth 1 https://github.com/pnnbao97/VieNeu-TTS.git /tmp/VieNeu-TTS
-          pip install -e /tmp/VieNeu-TTS
-          pip install numpy soundfile onnxruntime
+          python -m pip install -e /tmp/VieNeu-TTS
+          python -m pip install numpy soundfile onnxruntime
+          python - <<'PY'
+          from vieneu import Vieneu
+          tts = Vieneu(backend='onnx')
+          names = [label for label, _ in tts.list_preset_voices()]
+          assert 'Phạm Tuyên' in names, f'Phạm Tuyên voice not found: {names}'
+          print('VieNeu OK - Phạm Tuyên available')
+          PY
+
       - name: Build voice master timeline
-        run: python scripts/prepare_voice.py
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/prepare_voice.py
+          test -s public/voice.wav
+          test -s public/render.json
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-      - run: npm install
-      - run: npx remotion browser ensure
-      - run: npm run render
+
+      - name: Install Remotion
+        run: npm install
+
+      - name: Ensure Remotion browser
+        run: npx remotion browser ensure
+
+      - name: Render MP4
+        run: npm run render
+
+      - name: Verify MP4
+        shell: bash
+        run: test -s out/video.mp4
+
       - uses: actions/upload-artifact@v4
         with:
           name: video-output
           path: out/video.mp4
+          if-no-files-found: error
