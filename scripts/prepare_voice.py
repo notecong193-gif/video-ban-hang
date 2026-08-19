@@ -16,7 +16,9 @@ scenes = plan.get('scenes', [])
 if not scenes:
     raise SystemExit('video.json must contain scenes')
 
-tts = Vieneu(backend='onnx')
+# Keep the exact VieNeu v3 Turbo ONNX path/voice, but constrain CPU resources
+# for small production containers. INT8 is VieNeu's official CPU default.
+tts = Vieneu(backend='onnx', precision='int8', threads=1)
 voice = plan.get('voice', 'Phạm Tuyên')
 all_audio = []
 frame_cursor = 0
