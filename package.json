@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "studio": "remotion studio src/index.ts",
-    "render": "remotion render src/index.ts HandDrawnVideo out/video.mp4 --props=public/video.json"
+    "render": "remotion render src/index.ts HandDrawnVideo out/video.mp4 --props=public/render.json"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.0",
