@@ -1,0 +1,56 @@
+name: Render hand-drawn video
+
+on:
+  push:
+    paths:
+      - 'public/video.json'
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Install VieNeu and Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          git clone --depth 1 https://github.com/pnnbao97/VieNeu-TTS.git /tmp/VieNeu-TTS
+          python -m pip install -e /tmp/VieNeu-TTS
+
+      - name: Prepare VieNeu voice
+        run: python scripts/prepare_voice.py
+
+      - name: Render MP4
+        run: npm run render
+
+      - name: Verify MP4
+        run: |
+          test -s out/video.mp4
+          ffprobe -v error -show_entries format=duration,size -of default=nw=1 out/video.mp4
+
+      - name: Upload video
+        uses: actions/upload-artifact@v4
+        with:
+          name: handdrawn-video
+          path: out/video.mp4
+          if-no-files-found: error
+          retention-days: 7
