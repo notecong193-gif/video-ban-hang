@@ -1,4 +1,4 @@
-import json, os, sys
+import json
 from pathlib import Path
 import numpy as np
 import soundfile as sf
@@ -30,16 +30,34 @@ for i, scene in enumerate(scenes):
             raise SystemExit(f'Scene {i+1}: TTS segment must be under 100 characters: {seg!r}')
 
     pieces = []
+    subtitle_segments = []
+    local_frame = 0
+
     for seg in segments:
         audio = np.asarray(tts.infer(seg, voice=voice), dtype=np.float32)
+        if audio.size == 0:
+            raise SystemExit(f'Scene {i+1}: VieNeu returned empty audio')
+
+        audio_frames = max(1, int(round(len(audio) / SR * FPS)))
+        subtitle_segments.append({
+            'text': seg,
+            'start': local_frame,
+            'duration': audio_frames,
+        })
+        local_frame += audio_frames
+
         pieces.append(audio)
-        pieces.append(np.zeros(int(GAP * SR), dtype=np.float32))
+        gap = np.zeros(int(GAP * SR), dtype=np.float32)
+        pieces.append(gap)
+        local_frame += int(round(GAP * FPS))
+
     scene_audio = np.concatenate(pieces)
     all_audio.append(scene_audio)
 
     duration_frames = max(1, int(round(len(scene_audio) / SR * FPS)))
     scene['start'] = frame_cursor
     scene['duration'] = duration_frames
+    scene['subtitle_segments'] = subtitle_segments
     frame_cursor += duration_frames
 
 full = np.concatenate(all_audio)
