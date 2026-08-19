@@ -1,12 +1,15 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 
+type SubtitleSegment = {text: string; start: number; duration: number};
+
 export type Scene = {
   narration: string;
   start: number;
   duration: number;
   keyword?: string;
   visual?: 'person' | 'money' | 'idea' | 'chart' | 'product';
+  subtitle_segments?: SubtitleSegment[];
 };
 
 export type VideoProps = {
@@ -62,12 +65,20 @@ const SceneCard: React.FC<{scene: Scene}> = ({scene}) => {
   const frame = useCurrentFrame();
   const opacity = interpolate(frame, [0, 10], [0, 1], {extrapolateRight: 'clamp'});
   const y = interpolate(frame, [0, 16], [36, 0], {extrapolateRight:'clamp'});
+  const activeSubtitle = scene.subtitle_segments?.find((s) => frame >= s.start && frame < s.start + s.duration)?.text || '';
+
   return (
     <AbsoluteFill style={{padding:'170px 88px 190px', opacity, transform:`translateY(${y}px)`}}>
       <div style={{fontSize:64, lineHeight:1.16, fontWeight:800, maxWidth:900, color:'#171717'}}>{scene.keyword || scene.narration}</div>
       <svg width="820" height="55" viewBox="0 0 820 55" style={{marginTop:18}}><InkStroke d="M10 27 C190 18 360 35 520 23 C625 16 710 20 800 28" accent width={7}/></svg>
       <div style={{marginTop:60, display:'flex', justifyContent:'center'}}><HandDrawnIllustration type={scene.visual}/></div>
-      <div style={{marginTop:70, fontSize:36, lineHeight:1.35, color:'#343434', background:'rgba(255,255,255,.72)', borderRadius:22, padding:'18px 24px', maxWidth:900}}>{scene.narration}</div>
+      {activeSubtitle ? (
+        <div style={{position:'absolute', left:88, right:88, bottom:120, display:'flex', justifyContent:'center'}}>
+          <div style={{fontSize:36, lineHeight:1.28, color:'#343434', background:'rgba(255,255,255,.82)', borderRadius:22, padding:'16px 24px', maxWidth:900, textAlign:'center', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden'}}>
+            {activeSubtitle}
+          </div>
+        </div>
+      ) : null}
     </AbsoluteFill>
   );
 };
