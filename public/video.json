@@ -1,27 +1,76 @@
 {
-  "title": "VIDEO VẼ TAY",
-  "subtitle": "VieNeu • nam miền Bắc • voice-driven",
+  "title": "LÀM VIDEO VẼ TAY NGAY TRÊN CHATGPT",
+  "subtitle": "Skill Video Vẽ Tay v1.0",
+  "voice": "Phạm Tuyên",
   "scenes": [
     {
-      "narration": "Bạn có từng thấy những video vẽ tay như thế này?",
-      "keyword": "VIDEO VẼ TAY",
-      "start": 0,
-      "duration": 150,
+      "narration": "Bạn muốn làm video vẽ tay ngay trên ChatGPT mà không cần tự dựng từng cảnh?",
+      "tts_segments": [
+        "Bạn muốn làm video vẽ tay ngay trên ChatGPT mà không cần tự dựng từng cảnh?"
+      ],
+      "keyword": "VIDEO VẼ TAY NGAY TRÊN CHATGPT",
       "visual": "idea"
     },
     {
-      "narration": "Hình ảnh không đứng yên. Nét vẽ xuất hiện theo đúng nhịp lời đọc.",
-      "keyword": "NÉT → HÌNH → CHI TIẾT",
-      "start": 150,
-      "duration": 210,
+      "narration": "Với skill này, việc của bạn rất đơn giản: chỉ cần nhập chủ đề mình muốn làm.",
+      "tts_segments": [
+        "Với skill này, việc của bạn rất đơn giản: chỉ cần nhập chủ đề mình muốn làm."
+      ],
+      "keyword": "CHỈ CẦN NHẬP CHỦ ĐỀ",
       "visual": "person"
     },
     {
-      "narration": "Mỗi cảnh kể một ý bằng hình ảnh, thay vì biến video thành slideshow.",
-      "keyword": "SHOW THE IDEA",
-      "start": 360,
-      "duration": 210,
+      "narration": "ChatGPT sẽ tự viết nội dung, chia cảnh và xác định hình ảnh cần xuất hiện theo từng ý.",
+      "tts_segments": [
+        "ChatGPT sẽ tự viết nội dung, chia cảnh và xác định hình ảnh cần xuất hiện theo từng ý."
+      ],
+      "keyword": "NỘI DUNG → SCENE → VISUAL",
       "visual": "chart"
+    },
+    {
+      "narration": "Sau đó, lời đọc VieNeu được tạo trước và chính giọng đọc sẽ làm timeline cho toàn bộ video.",
+      "tts_segments": [
+        "Sau đó, lời đọc VieNeu được tạo trước.",
+        "Chính giọng đọc sẽ làm timeline cho toàn bộ video."
+      ],
+      "keyword": "VOICE = MASTER TIMELINE",
+      "visual": "idea"
+    },
+    {
+      "narration": "Hình không đứng yên như slide. Nét vẽ, nhân vật và chi tiết xuất hiện dần theo lời đọc.",
+      "tts_segments": [
+        "Hình không đứng yên như slide.",
+        "Nét vẽ, nhân vật và chi tiết xuất hiện dần theo lời đọc."
+      ],
+      "keyword": "NÉT → HÌNH → CHI TIẾT",
+      "visual": "person"
+    },
+    {
+      "narration": "Từ khóa quan trọng được highlight, subtitle chạy theo voice và mỗi cảnh luôn có chuyển động có mục đích.",
+      "tts_segments": [
+        "Từ khóa quan trọng được highlight, subtitle chạy theo voice.",
+        "Mỗi cảnh luôn có chuyển động có mục đích."
+      ],
+      "keyword": "HIGHLIGHT + SUBTITLE + MOTION",
+      "visual": "chart"
+    },
+    {
+      "narration": "Bạn chỉ cần mua skill một lần. Sau đó, mỗi lần muốn làm video mới, chỉ cần đưa chủ đề cho ChatGPT.",
+      "tts_segments": [
+        "Bạn chỉ cần mua skill một lần.",
+        "Sau đó, muốn làm video mới, chỉ cần đưa chủ đề cho ChatGPT."
+      ],
+      "keyword": "MUA 1 LẦN",
+      "visual": "money"
+    },
+    {
+      "narration": "Không cần tự viết prompt, không cần tự chia cảnh. Bạn nghĩ nội dung, AI chịu trách nhiệm sản xuất.",
+      "tts_segments": [
+        "Không cần tự viết prompt, không cần tự chia cảnh.",
+        "Bạn nghĩ nội dung, AI chịu trách nhiệm sản xuất."
+      ],
+      "keyword": "CHỈ CẦN CHỦ ĐỀ LÀ LÀM",
+      "visual": "product"
     }
   ]
 }
