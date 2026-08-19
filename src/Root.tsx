@@ -4,22 +4,26 @@ import {HandDrawnVideo, VideoProps} from './Video';
 
 const defaultProps: VideoProps = {
   title: 'VIDEO VẼ TAY',
-  subtitle: 'ChatGPT tạo timeline • Remotion tự render',
+  subtitle: 'Editorial Hand-Drawn • Voice-driven',
   scenes: [
-    {text: 'Hook: thu hút người xem ngay 3 giây đầu', start: 0, duration: 150},
-    {text: 'Nội dung xuất hiện theo từng nét vẽ', start: 150, duration: 180},
-    {text: 'Voice và hình ảnh chạy đúng timeline', start: 330, duration: 180},
+    {narration:'Hook: thu hút người xem ngay những giây đầu.', keyword:'HOOK 3–5 GIÂY', start:0, duration:150, visual:'idea'},
+    {narration:'Mỗi scene là một ý hình ảnh, không chia máy móc theo từng câu.', keyword:'MỘT SCENE = MỘT Ý', start:150, duration:210, visual:'person'},
+    {narration:'Nét, hình và chi tiết xuất hiện theo nhịp giọng đọc.', keyword:'NÉT → HÌNH → CHI TIẾT', start:360, duration:210, visual:'chart'},
+    {narration:'Chỉ giữ từ khóa quan trọng trên màn hình, không bê toàn bộ lời đọc lên.', keyword:'SHOW THE IDEA', start:570, duration:210, visual:'money'},
   ],
 };
+
+const totalFrames = (props: VideoProps) => Math.max(30, ...props.scenes.map((s) => s.start + s.duration));
 
 export const Root: React.FC = () => (
   <Composition
     id="HandDrawnVideo"
     component={HandDrawnVideo}
-    durationInFrames={510}
+    durationInFrames={totalFrames(defaultProps)}
     fps={30}
     width={1080}
     height={1920}
     defaultProps={defaultProps}
+    calculateMetadata={({props}) => ({durationInFrames: totalFrames(props as VideoProps)})}
   />
 );
