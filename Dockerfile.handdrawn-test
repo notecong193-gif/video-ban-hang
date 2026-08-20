@@ -17,8 +17,11 @@ COPY requirements.txt ./
 RUN python3 -m pip install --break-system-packages -r requirements.txt
 RUN git clone --depth 1 https://github.com/pnnbao97/VieNeu-TTS.git /tmp/VieNeu-TTS \
     && python3 -m pip install --break-system-packages -e /tmp/VieNeu-TTS
-# Download VieNeu ONNX INT8 model during image build so runtime renders do not re-download it.
+# Download VieNeu ONNX INT8 model during image build.
 RUN python3 -c "from vieneu import Vieneu; Vieneu(backend='onnx', precision='int8', threads=1); print('VIENEU_MODEL_CACHED')"
+# Runtime must use the baked model cache, never re-check/download from Hub.
+ENV HF_HUB_OFFLINE=1
+ENV TRANSFORMERS_OFFLINE=1
 COPY . .
 RUN mkdir -p /app/out /app/public
 ENV PORT=8080
