@@ -1,0 +1,14 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "Dockerfile.handdrawn-test"
+  },
+  "deploy": {
+    "startCommand": "sh -c 'python3 scripts/prepare_voice.py && npm run render && uvicorn api_server:app --host 0.0.0.0 --port ${PORT}'",
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 600,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 2
+  }
+}
