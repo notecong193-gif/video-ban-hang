@@ -1,13 +1,44 @@
 {
-  "title": "GIỚI THIỆU KỸ NĂNG VẼ TAY VIDEO",
-  "subtitle": "Tối giản thời gian edit",
+  "title": "CÓ NÊN LÀM TIẾP THỊ LIÊN KẾT FACEBOOK KHÔNG?",
+  "subtitle": "Facebook Affiliate",
   "voice": "Phạm Tuyên",
-  "render_nonce": "2026-08-19T20:10:00+07:00",
+  "render_nonce": "2026-08-20T10:00:00+07:00",
   "scenes": [
-    {"narration":"Muốn làm video vẽ tay mà không mất hàng giờ ngồi edit?","tts_segments":["Muốn làm video vẽ tay mà không mất hàng giờ ngồi edit?"],"keyword":"VIDEO VẼ TAY NHANH GỌN","visual":"person"},
-    {"narration":"Với kỹ năng này, bạn chỉ cần đưa chủ đề cho ChatGPT.","tts_segments":["Với kỹ năng này, bạn chỉ cần đưa chủ đề cho ChatGPT."],"keyword":"CHỈ CẦN NHẬP CHỦ ĐỀ","visual":"idea"},
-    {"narration":"Hệ thống tự chia cảnh, tạo lời đọc và sắp xếp visual theo nội dung.","tts_segments":["Hệ thống tự chia cảnh, tạo lời đọc và sắp xếp visual theo nội dung."],"keyword":"TỰ ĐỘNG CHIA CẢNH","visual":"chart"},
-    {"narration":"Hình ảnh được vẽ dần theo lời thoại, không phải kiểu slideshow ảnh tĩnh.","tts_segments":["Hình ảnh được vẽ dần theo lời thoại, không phải kiểu slideshow ảnh tĩnh."],"keyword":"VẼ DẦN THEO TIMELINE","visual":"product"},
-    {"narration":"Kết quả là một clip gọn, dễ hiểu và tiết kiệm rất nhiều thời gian edit.","tts_segments":["Kết quả là một clip gọn, dễ hiểu và tiết kiệm rất nhiều thời gian edit."],"keyword":"TỐI GIẢN THỜI GIAN EDIT","visual":"money"}
+    {
+      "narration": "Có nên làm tiếp thị liên kết trên Facebook không? Có, nhưng đừng nghĩ chỉ đăng link là có tiền.",
+      "tts_segments": [
+        "Có nên làm tiếp thị liên kết trên Facebook không?",
+        "Có, nhưng đừng nghĩ chỉ đăng link là có tiền."
+      ],
+      "keyword": "FACEBOOK AFFILIATE: CÓ NÊN LÀM?",
+      "visual": "affiliate1"
+    },
+    {
+      "narration": "Muốn có đơn, trước hết bạn phải làm nội dung khiến người xem tin và muốn bấm vào sản phẩm.",
+      "tts_segments": [
+        "Muốn có đơn, trước hết bạn phải làm nội dung.",
+        "Hãy khiến người xem tin và muốn bấm vào sản phẩm."
+      ],
+      "keyword": "NỘI DUNG TẠO NIỀM TIN",
+      "visual": "affiliate2"
+    },
+    {
+      "narration": "Lượt xem cao chưa chắc có đơn. Quan trọng là đúng người xem, đúng sản phẩm và đúng cách giới thiệu.",
+      "tts_segments": [
+        "Lượt xem cao chưa chắc có đơn.",
+        "Quan trọng là đúng người xem, đúng sản phẩm và đúng cách giới thiệu."
+      ],
+      "keyword": "VIEW KHÔNG ĐỒNG NGHĨA VỚI ĐƠN",
+      "visual": "affiliate3"
+    },
+    {
+      "narration": "Nếu chịu học cách làm nội dung và thử nghiệm đều đặn, Facebook Affiliate vẫn là một hướng đáng làm.",
+      "tts_segments": [
+        "Nếu chịu học cách làm nội dung và thử nghiệm đều đặn,",
+        "Facebook Affiliate vẫn là một hướng đáng làm."
+      ],
+      "keyword": "LÀM ĐƯỢC, NHƯNG KHÔNG PHẢI TIỀN DỄ",
+      "visual": "affiliate4"
+    }
   ]
 }
