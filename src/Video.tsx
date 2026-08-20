@@ -1,45 +1,77 @@
 import React from 'react';
-import {AbsoluteFill, Audio, Sequence, interpolate, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Audio, Img, Sequence, interpolate, useCurrentFrame} from 'remotion';
 
-type SubtitleSegment = {text: string; start: number; duration: number};
-export type Scene = {narration:string;start:number;duration:number;keyword?:string;visual?:'person'|'money'|'idea'|'chart'|'product';subtitle_segments?:SubtitleSegment[]};
-export type VideoProps = {title:string;subtitle?:string;audio?:string;scenes:Scene[]};
+type SubtitleSegment={text:string;start:number;duration:number};
+export type Scene={narration:string;start:number;duration:number;keyword?:string;subtitle_segments?:SubtitleSegment[];visual?:string};
+export type VideoProps={title:string;subtitle?:string;audio?:string;scenes:Scene[]};
 
-const INK='#222'; const RED='#d94b3d'; const YELLOW='#f2c84b'; const PAPER='#fbfaf6';
+const PAPER='#fbfaf6';
+const INK='#302d28';
+const HAND='https://freepngimg.com/thumb/pen/31-pen-in-hand-png-image.png';
 
-const Stroke:React.FC<{d:string;start:number;dur?:number;color?:string;width?:number}>=({d,start,dur=18,color=INK,width=5})=>{
- const f=useCurrentFrame(); const p=interpolate(f,[start,start+dur],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
- return <path d={d} fill="none" stroke={color} strokeWidth={width} strokeLinecap="round" strokeLinejoin="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1-p}/>;
+const RoughFilter=()=> <defs><filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8"/></filter></defs>;
+const S=({d,w=2.4}:{d:string;w?:number})=><path d={d} fill="none" stroke={INK} strokeWidth={w} strokeLinecap="round" strokeLinejoin="round"/>;
+const T=({x,y,w=120}:{x:number;y:number;w?:number})=><><S d={`M${x} ${y} C${x+w*.22} ${y-3} ${x+w*.45} ${y+3} ${x+w} ${y}`}/><S d={`M${x} ${y+12} C${x+w*.18} ${y+10} ${x+w*.55} ${y+15} ${x+w*.82} ${y+12}`} w={1.5}/></>;
+
+const AffiliateSketch:React.FC<{kind:number}>=({kind})=>{
+ if(kind===0)return <svg viewBox="0 0 900 430" width="900" height="430"><RoughFilter/><g filter="url(#rough)">
+  <S d="M70 300 L500 300 L500 325 L70 325 Z M105 325 L95 410 M470 325 L485 410" w={3}/>
+  <S d="M205 110 L425 110 L425 270 L205 270 Z M235 140 L395 140 L395 235 L235 235 Z" w={3}/>
+  <S d="M130 205 C95 170 105 125 145 118 C188 112 208 160 188 193 C175 215 146 220 130 205 Z M150 215 L150 300 M150 240 L105 282 M150 240 L195 270"/>
+  <S d="M570 70 L760 70 L760 330 L570 330 Z M595 105 L735 105 L735 295 L595 295 Z" w={3}/>
+  <S d="M650 145 L650 240 M650 145 L695 145 M650 188 L690 188" w={5}/>
+  <S d="M805 235 L910 235 L895 315 L825 315 Z M835 342 A12 12 0 1 0 859 342 A12 12 0 1 0 835 342 M875 342 A12 12 0 1 0 899 342 A12 12 0 1 0 875 342"/>
+  <S d="M535 340 L620 340 L620 395 L535 395 Z M650 345 L735 345 L735 400 L650 400 Z M765 338 L850 338 L850 393 L765 393 Z"/>
+  <S d="M535 340 L578 362 L620 340 M650 345 L693 367 L735 345 M765 338 L808 360 L850 338"/>
+  <T x={255} y={155} w={105}/><T x={255} y={190} w={95}/><T x={590} y={255} w={120}/>
+ </g></svg>;
+ if(kind===1)return <svg viewBox="0 0 900 430" width="900" height="430"><RoughFilter/><g filter="url(#rough)">
+  <S d="M55 305 L520 305 L520 332 L55 332 Z M90 332 L80 415 M490 332 L500 415" w={3}/>
+  <S d="M205 125 L420 125 L420 285 L205 285 Z M235 155 L390 155 L390 250 L235 250 Z" w={3}/>
+  <S d="M115 205 A55 55 0 1 0 114 205 M115 150 A42 42 0 1 0 114 150 M115 260 L115 305"/>
+  <S d="M600 205 C570 175 580 130 620 125 C660 120 682 160 666 195 C655 218 623 225 600 205 Z M620 220 L620 305 M620 245 L565 287 M620 245 L680 280"/>
+  <S d="M710 85 L840 85 L840 160 L710 160 Z M755 175 L885 175 L885 250 L755 250 Z M690 270 L820 270 L820 345 L690 345 Z"/>
+  <T x={728} y={105} w={85}/><T x={773} y={195} w={85}/><T x={708} y={290} w={85}/>
+  <S d="M420 215 C480 215 505 215 555 198 M545 187 L560 198 L545 210"/>
+  <S d="M55 265 L155 265 L155 290 L55 290 Z M65 240 L160 240 L160 265 L65 265 Z"/>
+ </g></svg>;
+ if(kind===2)return <svg viewBox="0 0 900 430" width="900" height="430"><RoughFilter/><g filter="url(#rough)">
+  <S d="M75 70 L355 70 L320 165 L110 165 Z M120 190 L310 190 L280 280 L150 280 Z M165 305 L270 305 L250 395 L185 395 Z" w={3}/>
+  <S d="M135 120 C175 85 255 85 300 120 C255 155 175 155 135 120 Z M220 102 A18 18 0 1 0 220 138 A18 18 0 1 0 220 102"/>
+  <S d="M470 140 A42 42 0 1 0 554 140 A42 42 0 1 0 470 140 M535 140 A42 42 0 1 0 619 140 A42 42 0 1 0 535 140 M510 140 L575 140"/>
+  <S d="M650 105 L820 105 L820 265 L650 265 Z M650 155 L735 195 L820 155 M735 195 L735 265" w={3}/>
+  <S d="M405 245 L590 245 L590 400 L405 400 Z" w={3}/>
+  <S d="M435 350 L470 318 L510 332 L555 278 M540 282 L558 278 L550 298" w={3}/>
+  <S d="M438 372 L438 390 M475 355 L475 390 M512 345 L512 390 M550 300 L550 390"/>
+  <T x={675} y={295} w={120}/><T x={675} y={325} w={105}/>
+ </g></svg>;
+ return <svg viewBox="0 0 900 430" width="900" height="430"><RoughFilter/><g filter="url(#rough)">
+  <S d="M450 70 L450 350 M290 135 L610 135 M450 135 L375 235 M450 135 L525 235 M300 235 L450 235 M450 235 L600 235" w={3}/>
+  <S d="M315 255 L420 255 L410 330 L325 330 Z M340 348 L395 348"/>
+  <S d="M535 270 A38 38 0 1 0 535 346 A38 38 0 1 0 535 270 M535 287 L535 330 M520 300 L550 300"/>
+  <S d="M80 350 L160 210 L240 350 Z M160 250 L160 305 M160 328 A5 5 0 1 0 160 338" w={3}/>
+  <S d="M650 350 L710 300 L765 325 L850 220 M825 225 L850 220 L842 245" w={3}/>
+  <S d="M720 150 C690 125 700 85 735 80 C770 75 790 110 776 140 C765 162 739 168 720 150 Z M735 165 L735 220 M735 185 L690 220 M735 185 L775 215"/>
+  <S d="M790 95 A10 10 0 1 0 810 95 A10 10 0 1 0 790 95 M825 70 A14 14 0 1 0 853 70 A14 14 0 1 0 825 70 M860 48 A28 28 0 1 0 916 48 A28 28 0 1 0 860 48"/>
+  <T x={610} y={90} w={115}/><T x={610} y={112} w={95}/>
+ </g></svg>;
 };
-const Fill:React.FC<{children:React.ReactNode;start:number;opacity?:number}>=({children,start,opacity=.18})=>{const f=useCurrentFrame();const o=interpolate(f,[start,start+12],[0,opacity],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});return <g opacity={o}>{children}</g>};
-const Scribble:React.FC<{x:number;y:number;w:number;start:number;color?:string}>=({x,y,w,start,color=RED})=><Stroke d={`M${x} ${y} C${x+w*.2} ${y-5} ${x+w*.4} ${y+6} ${x+w*.6} ${y} C${x+w*.75} ${y-5} ${x+w*.9} ${y+5} ${x+w} ${y}`} start={start} color={color} width={6}/>;
 
-const Pen:React.FC<{scene:number}>=({scene})=>{const f=useCurrentFrame();const pts=[[[120,118],[390,210],[690,360]],[[115,250],[360,270],[690,275]],[[125,280],[390,250],[695,315]],[[120,180],[360,250],[700,360]],[[130,310],[390,250],[705,310]]][scene%5]; const phase=Math.min(2,Math.floor(f/38)); const local=(f%38)/38; const a=pts[phase],b=pts[Math.min(phase+1,2)]; const x=a[0]+(b[0]-a[0])*local,y=a[1]+(b[1]-a[1])*local; return <g transform={`translate(${x} ${y}) rotate(-32)`}><rect x="0" y="0" width="92" height="20" rx="8" fill="#f7f7f2" stroke={INK} strokeWidth="3"/><path d="M0 4 L-18 10 L0 16Z" fill={INK}/><path d="M45 0 L45 20" stroke={RED} strokeWidth="5"/></g>};
+const RealHand:React.FC<{x:number;y:number;opacity:number}>=({x,y,opacity})=><Img src={HAND} style={{position:'absolute',left:x,top:y,width:270,opacity,transform:'rotate(-12deg)',transformOrigin:'18px 88px',filter:'drop-shadow(0 3px 4px rgba(0,0,0,.12))'}}/>;
 
-const Person=({x=170,y=260,start=0,thumb=false}:{x?:number;y?:number;start?:number;thumb?:boolean})=><g transform={`translate(${x} ${y})`}>
- <Stroke d="M0 0 C-35-30-35-90 0-115 C35-140 78-118 88-78 C98-38 68-5 38 6" start={start}/>
- <Stroke d="M12-70 L20-70 M58-70 L66-70 M20-42 Q40-28 60-42" start={start+10} width={4}/>
- <Stroke d="M18 8 L5 120 M62 8 L82 120 M20 42 L-45 88 M65 40 L122 76" start={start+18}/>
- {thumb?<><Stroke d="M122 76 L150 48 L161 61 L147 89" start={start+27} color={RED}/><Fill start={start+35}><circle cx="40" cy="-65" r="56" fill={YELLOW}/></Fill></>:null}
- </g>;
-
-const SceneIllustration:React.FC<{index:number}>=({index})=>{
- if(index===0)return <svg viewBox="0 0 820 520" width="820" height="520"><Person x={125} y={255} start={4}/><Stroke d="M365 125 L735 125 L735 405 L365 405 Z" start={25}/><Stroke d="M400 165 L690 165 M400 205 L625 205" start={34} color={RED}/><Stroke d="M445 295 C500 245 565 245 620 295 C565 345 500 345 445 295 Z" start={46}/><Stroke d="M520 270 L575 295 L520 322 Z" start={54} color={RED}/><Scribble x={410} y={385} w={270} start={60}/><Pen scene={0}/></svg>;
- if(index===1)return <svg viewBox="0 0 820 520" width="820" height="520"><Stroke d="M75 170 L255 170 L255 330 L75 330 Z" start={3}/><Stroke d="M105 210 L220 210 M105 245 L205 245 M105 280 L185 280" start={12}/><Stroke d="M285 250 C330 220 355 220 400 250" start={24} color={RED}/><Stroke d="M390 250 L375 235 M390 250 L375 265" start={28} color={RED}/><Stroke d="M420 180 C385 210 385 285 420 315 C455 345 500 320 500 250 C500 180 455 150 420 180 Z" start={34}/><Stroke d="M460 315 L460 365 M425 365 L495 365" start={45}/><Stroke d="M530 250 C575 220 600 220 645 250" start={50} color={RED}/><Stroke d="M635 250 L620 235 M635 250 L620 265" start={54} color={RED}/><Stroke d="M660 175 L760 175 L760 330 L660 330 Z M682 205 L738 205 M682 245 L738 245 M682 285 L725 285" start={58}/><Pen scene={1}/></svg>;
- if(index===2)return <svg viewBox="0 0 820 520" width="820" height="520"><Stroke d="M120 310 C70 260 85 175 155 160 C230 145 270 230 220 280 C200 300 195 320 195 340 L145 340 C145 320 142 300 120 310 Z" start={3} color={RED}/><Stroke d="M145 365 L195 365 M150 385 L190 385" start={20}/><Stroke d="M280 275 C330 245 355 245 405 275" start={28} color={RED}/><Stroke d="M395 275 L380 260 M395 275 L380 290" start={32} color={RED}/><Stroke d="M440 390 L440 220 L650 220" start={37}/><Stroke d="M480 390 L480 335 M525 390 L525 300 M570 390 L570 270 M615 390 L615 235" start={44} color={RED}/><Person x={650} y={320} start={58} thumb/><Pen scene={2}/></svg>;
- if(index===3)return <svg viewBox="0 0 820 520" width="820" height="520"><Stroke d="M95 120 C185 95 285 100 365 125" start={3}/><Stroke d="M110 180 C185 145 260 150 335 180" start={12} color={RED}/><Stroke d="M125 245 C210 215 285 215 355 245" start={21}/><Stroke d="M410 120 L720 120 L720 390 L410 390 Z" start={30}/><Stroke d="M445 170 L680 170 M445 215 L625 215" start={38}/><Stroke d="M465 300 C520 245 600 245 655 300 C600 355 520 355 465 300 Z" start={46}/><Stroke d="M535 270 L595 300 L535 330 Z" start={54} color={RED}/><Scribble x={455} y={365} w={230} start={62}/><Pen scene={3}/></svg>;
- return <svg viewBox="0 0 820 520" width="820" height="520"><Stroke d="M105 115 L405 115 L405 410 L105 410 Z" start={3}/><Stroke d="M145 175 L170 200 L205 155 M225 180 L355 180" start={14} color={RED}/><Stroke d="M145 235 L170 260 L205 215 M225 240 L350 240" start={25} color={RED}/><Stroke d="M145 295 L170 320 L205 275 M225 300 L340 300" start={36} color={RED}/><Stroke d="M440 260 C500 220 540 220 590 260" start={46}/><Stroke d="M580 260 L560 240 M580 260 L560 278" start={50}/><Person x={610} y={305} start={56} thumb/><Scribble x={525} y={420} w={220} start={72}/><Pen scene={4}/></svg>;
+const SketchReveal:React.FC<{scene:Scene;index:number}>=({scene,index})=>{
+ const f=useCurrentFrame(); const dur=Math.max(1,scene.duration); const p=interpolate(f,[0,dur*.92],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
+ const bands=[0,.2,.45,.7].map((start,i)=>({q:interpolate(p,[start,Math.min(1,start+.33)],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'}),top:i*25}));
+ let active=0; for(let i=0;i<bands.length;i++)if(bands[i].q>0&&bands[i].q<1)active=i;
+ const aq=bands[active].q; const hx=45+aq*760; const hy=45+active*88+Math.sin(f*.22)*5;
+ const sketch=<AffiliateSketch kind={index%4}/>;
+ return <div style={{position:'relative',width:900,height:430,overflow:'hidden'}}>
+  {bands.map((b,i)=><div key={i} style={{position:'absolute',left:0,top:`${b.top}%`,width:'100%',height:'30%',overflow:'hidden'}}><div style={{position:'absolute',left:0,top:`-${b.top/0.30}%`,width:900,height:430,clipPath:`inset(0 ${100-b.q*100}% 0 0)`}}>{sketch}</div></div>)}
+  <div style={{position:'absolute',inset:0,opacity:interpolate(p,[.84,1],[0,.13],{extrapolateLeft:'clamp',extrapolateRight:'clamp'})}}>{sketch}</div>
+  <RealHand x={hx} y={hy} opacity={p<.985?1:0}/>
+ </div>;
 };
 
-const SceneView:React.FC<{scene:Scene;index:number}>=({scene,index})=>{const f=useCurrentFrame();const active=scene.subtitle_segments?.find(s=>f>=s.start&&f<s.start+s.duration)?.text||'';const kw=interpolate(f,[2,14],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});return <AbsoluteFill style={{padding:'105px 72px 95px'}}>
- <div style={{fontFamily:'Comic Sans MS, Segoe Print, cursive',fontWeight:800,fontSize:54,lineHeight:1.08,color:INK,opacity:kw,maxWidth:900}}>{scene.keyword||scene.narration}</div>
- <Scribble x={0} y={0} w={0} start={0}/>
- <div style={{marginTop:34,display:'flex',justifyContent:'center'}}><SceneIllustration index={index}/></div>
- {active?<div style={{position:'absolute',bottom:58,left:90,right:90,textAlign:'center',fontFamily:'Arial, sans-serif',fontSize:31,lineHeight:1.25,color:'#303030',fontWeight:600}}>{active}</div>:null}
- </AbsoluteFill>};
+const SceneView:React.FC<{scene:Scene;index:number}>=({scene,index})=>{const f=useCurrentFrame();const active=scene.subtitle_segments?.find(s=>f>=s.start&&f<s.start+s.duration)?.text||'';const to=interpolate(f,[scene.duration*.72,scene.duration*.88],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});return <AbsoluteFill style={{background:PAPER,padding:'22px 70px 28px'}}><div style={{height:52,textAlign:'center',fontFamily:'Georgia,serif',fontWeight:700,fontSize:29,color:'#292724',opacity:to}}>{scene.keyword||''}</div><div style={{display:'flex',justifyContent:'center'}}><SketchReveal scene={scene} index={index}/></div>{active?<div style={{position:'absolute',left:80,right:80,bottom:14,textAlign:'center',fontFamily:'Arial,sans-serif',fontSize:22,fontWeight:600,color:'#343434'}}>{active}</div>:null}</AbsoluteFill>};
 
-export const HandDrawnVideo:React.FC<VideoProps>=({audio,scenes})=><AbsoluteFill style={{background:PAPER}}>
- <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(rgba(0,0,0,.025) 1px, transparent 1px)',backgroundSize:'9px 9px'}}/>
- {audio?<Audio src={audio.startsWith('http')?audio:staticFile(audio)}/>:null}
- {scenes.map((s,i)=><Sequence key={i} from={s.start} durationInFrames={s.duration}><SceneView scene={s} index={i}/></Sequence>)}
- </AbsoluteFill>;
+export const HandDrawnVideo:React.FC<VideoProps>=({audio,scenes})=><AbsoluteFill style={{background:PAPER}}>{audio?<Audio src={audio}/>:null}{scenes.map((s,i)=><Sequence key={i} from={s.start} durationInFrames={s.duration}><SceneView scene={s} index={i}/></Sequence>)}</AbsoluteFill>;
